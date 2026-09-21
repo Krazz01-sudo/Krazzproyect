@@ -1,13 +1,9 @@
-20/9/26   21:49
-
-index.html
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Un regalo especial para ti 💛</title>
+  <title>Una carta especial para ti 🌻💛</title>
   <style>
     * {
       box-sizing: border-box;
@@ -16,115 +12,166 @@ index.html
     }
 
     body {
-      background: linear-gradient(135deg, #fff9e6, #fff0b3);
+      background: linear-gradient(135deg, #fff3cd, #ffe89a);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 20px;
       position: relative;
     }
 
-    /* Mensaje Principal */
-    .title {
-      font-size: 2.2rem;
-      color: #b38f00;
-      text-align: center;
-      margin-bottom: 20px;
-      z-index: 10;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-      padding: 0 15px;
-    }
-
-    /* Contenedor del Regalo */
-    .gift-container {
-      position: relative;
+    /* Sobre interactivo */
+    .envelope-wrapper {
       cursor: pointer;
       z-index: 10;
+      text-align: center;
       transition: transform 0.3s ease;
     }
 
-    .gift-container:hover {
+    .envelope-wrapper:hover {
       transform: scale(1.05);
     }
 
-    .gift-box {
-      width: 140px;
-      height: 140px;
-      background-color: #e63946;
-      border-radius: 10px;
+    .envelope {
+      width: 220px;
+      height: 150px;
+      background-color: #f39c12;
+      border-radius: 8px;
       position: relative;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      margin: 0 auto 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Listón del regalo */
-    .gift-box::before {
+    /* Solapa del sobre */
+    .envelope::before {
       content: '';
       position: absolute;
-      width: 25px;
-      height: 100%;
-      background-color: #ffd700;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 110px solid transparent;
+      border-right: 110px solid transparent;
+      border-top: 80px solid #d68910;
+      transform-origin: top;
+      transition: transform 0.5s ease;
     }
 
-    .gift-box::after {
-      content: '';
-      position: absolute;
-      height: 25px;
-      width: 100%;
-      background-color: #ffd700;
-      top: 50%;
-      transform: translateY(-50%);
+    .heart-seal {
+      font-size: 2.2rem;
+      z-index: 2;
     }
 
-    .moño {
-      position: absolute;
-      top: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 30px;
-      background-color: #ffd700;
-      border-radius: 50% 50% 0 0;
-      z-index: 11;
+    .instruction {
+      font-size: 1.2rem;
+      color: #7d6608;
+      font-weight: 600;
     }
 
-    /* Carta o Mensaje Oculto */
-    .card {
+    /* Contenedor principal de la Carta y el Ramo */
+    .letter-container {
       display: none;
       background-color: #ffffff;
-      padding: 30px;
+      padding: 30px 25px;
       border-radius: 20px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.15);
       text-align: center;
-      max-width: 400px;
-      width: 90%;
+      max-width: 480px;
+      width: 100%;
       z-index: 20;
-      animation: popup 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: openCard 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    @keyframes popup {
-      0% { transform: scale(0); opacity: 0; }
+    @keyframes openCard {
+      0% { transform: scale(0.3); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
-    .card h2 {
-      color: #d4ac0d;
+    .letter-container h1 {
+      color: #b7950b;
+      font-size: 1.8rem;
       margin-bottom: 15px;
     }
 
-    .card p {
+    .letter-container p {
       color: #4a4a4a;
       font-size: 1.1rem;
       line-height: 1.6;
+      margin-bottom: 25px;
     }
 
-    /* Animación de Flores Cayendo */
-    .flower {
+    /* Ilustración del Ramo de Girasoles con Flores */
+    .bouquet-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+      height: 180px;
+      margin-top: 10px;
+    }
+
+    .bouquet {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+
+    /* Tallo y Envoltorio del ramo */
+    .wrapper-paper {
       position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 100px;
+      background: #e5c07b;
+      clip-path: polygon(10% 0%, 90% 0%, 70% 100%, 30% 100%);
+      border-radius: 4px;
+      box-shadow: inset 0 -10px 15px rgba(0,0,0,0.1);
+    }
+
+    .ribbon {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 15px;
+      background-color: #e74c3c;
+      border-radius: 10px;
+      z-index: 5;
+    }
+
+    /* Flores individuales dentro del ramo */
+    .flower-item {
+      position: absolute;
+      animation: floatFlower 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatFlower {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .sunflower1 { font-size: 3.5rem; top: -10px; left: 10px; z-index: 3; }
+    .sunflower2 { font-size: 4rem; top: -30px; left: 50px; z-index: 4; }
+    .sunflower3 { font-size: 3.5rem; top: -10px; left: 90px; z-index: 3; }
+    .small-flower1 { font-size: 2.2rem; top: 30px; left: 5px; z-index: 4; }
+    .small-flower2 { font-size: 2.2rem; top: 30px; left: 115px; z-index: 4; }
+    .leaf1 { font-size: 2.5rem; top: 10px; left: -15px; transform: rotate(-30deg); }
+    .leaf2 { font-size: 2.5rem; top: 10px; left: 125px; transform: rotate(30deg); }
+
+    /* Lluvia de Flores en pantalla */
+    .falling-flower {
+      position: fixed;
       top: -50px;
       user-select: none;
       pointer-events: none;
@@ -141,56 +188,71 @@ index.html
 </head>
 <body>
 
-  <h1 class="title" id="mainTitle">¡Tengo un regalo especial para ti! 💛</h1>
-
-  <!-- Regalo -->
-  <div class="gift-container" id="gift" onclick="openGift()">
-    <div class="moño"></div>
-    <div class="gift-box"></div>
+  <!-- Vista Inicial: Sobre de la carta -->
+  <div class="envelope-wrapper" id="envelopeWrapper" onclick="openLetter()">
+    <div class="envelope">
+      <div class="heart-seal">💌</div>
+    </div>
+    <div class="instruction">Haz clic para abrir tu carta 💛</div>
   </div>
 
-  <!-- Carta con el mensaje -->
-  <div class="card" id="card">
-    <h2>🌼 ¡Para el amor de mi vida Oriana! 🌻</h2>
+  <!-- Vista Secundaria: Carta con el ramo -->
+  <div class="letter-container" id="letterContainer">
+    <h1>🌻 Para ti Oriana, con todo mi amor 💛</h1>
     <p>
-      Escribí esto para recordarte lo mucho que te quiero y lo especial que eres para mí. 
-      Espero que estas flores amarillas iluminen tu día tanto como tú iluminas mi vida. ❤️
+      Quería darte este detalle especial para sacarte una sonrisa. 
+      Así como los girasoles siempre buscan la luz del sol, yo siempre amo ver la luz de tus ojos cuando sonries. 
+      ¡Espero que te encante tu ramo de flores amarillas!
     </p>
+
+    <!-- Ramo de girasoles decorativo -->
+    <div class="bouquet-wrapper">
+      <div class="bouquet">
+        <span class="flower-item leaf1">🌿</span>
+        <span class="flower-item leaf2">🌿</span>
+        <span class="flower-item sunflower1">🌻</span>
+        <span class="flower-item sunflower2">🌻</span>
+        <span class="flower-item sunflower3">🌻</span>
+        <span class="flower-item small-flower1">🌼</span>
+        <span class="flower-item small-flower2">🌼</span>
+        <div class="ribbon"></div>
+        <div class="wrapper-paper"></div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Crear flores amarillas animadas
-    const flowerTypes = ['🌻', '🌼', '💛', '✨'];
+    const flowerTypes = ['🌻', '🌼', '💛', '✨', '🌸'];
+    let rainInterval;
 
-    function createFlower() {
+    function createFallingFlower() {
       const flower = document.createElement('div');
-      flower.classList.add('flower');
+      flower.classList.add('falling-flower');
       flower.innerText = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
       
       flower.style.left = Math.random() * 100 + 'vw';
-      flower.style.animationDuration = Math.random() * 3 + 2 + 's'; // Entre 2 y 5 segundos
-      flower.style.fontSize = Math.random() * 20 + 20 + 'px'; // Tamaño entre 20px y 40px
-      flower.style.opacity = Math.random() * 0.7 + 0.3;
+      flower.style.animationDuration = Math.random() * 3 + 2.5 + 's';
+      flower.style.fontSize = Math.random() * 20 + 20 + 'px';
+      flower.style.opacity = Math.random() * 0.8 + 0.2;
 
       document.body.appendChild(flower);
 
       setTimeout(() => {
         flower.remove();
-      }, 5000);
+      }, 5500);
     }
 
-    // Iniciar la lluvia de flores de fondo
-    setInterval(createFlower, 300);
+    function openLetter() {
+      // Ocultar sobre y mostrar carta
+      document.getElementById('envelopeWrapper').style.display = 'none';
+      document.getElementById('letterContainer').style.display = 'block';
 
-    // Abrir el regalo al hacer clic
-    function openGift() {
-      document.getElementById('gift').style.display = 'none';
-      document.getElementById('mainTitle').style.display = 'none';
-      document.getElementById('card').style.display = 'block';
+      // Iniciar lluvia continua de flores amarillas
+      rainInterval = setInterval(createFallingFlower, 200);
 
-      // Intensificar las flores al abrir
-      for (let i = 0; i < 30; i++) {
-        setTimeout(createFlower, i * 50);
+      // Ráfaga inicial de flores
+      for (let i = 0; i < 25; i++) {
+        setTimeout(createFallingFlower, i * 40);
       }
     }
   </script>
