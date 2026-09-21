@@ -1,0 +1,198 @@
+20/9/26   21:49
+
+index.html
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Un regalo especial para ti 💛</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff9e6, #fff0b3);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Mensaje Principal */
+    .title {
+      font-size: 2.2rem;
+      color: #b38f00;
+      text-align: center;
+      margin-bottom: 20px;
+      z-index: 10;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      padding: 0 15px;
+    }
+
+    /* Contenedor del Regalo */
+    .gift-container {
+      position: relative;
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    .gift-container:hover {
+      transform: scale(1.05);
+    }
+
+    .gift-box {
+      width: 140px;
+      height: 140px;
+      background-color: #e63946;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    /* Listón del regalo */
+    .gift-box::before {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 100%;
+      background-color: #ffd700;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .gift-box::after {
+      content: '';
+      position: absolute;
+      height: 25px;
+      width: 100%;
+      background-color: #ffd700;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .moño {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 30px;
+      background-color: #ffd700;
+      border-radius: 50% 50% 0 0;
+      z-index: 11;
+    }
+
+    /* Carta o Mensaje Oculto */
+    .card {
+      display: none;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      z-index: 20;
+      animation: popup 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes popup {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .card h2 {
+      color: #d4ac0d;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      color: #4a4a4a;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Animación de Flores Cayendo */
+    .flower {
+      position: absolute;
+      top: -50px;
+      user-select: none;
+      pointer-events: none;
+      z-index: 5;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="title" id="mainTitle">¡Tengo un regalo especial para ti! 💛</h1>
+
+  <!-- Regalo -->
+  <div class="gift-container" id="gift" onclick="openGift()">
+    <div class="moño"></div>
+    <div class="gift-box"></div>
+  </div>
+
+  <!-- Carta con el mensaje -->
+  <div class="card" id="card">
+    <h2>🌼 ¡Para el amor de mi vida! 🌻</h2>
+    <p>
+      Escribí esto para recordarte lo mucho que te amo y lo especial que eres para mí. 
+      Espero que estas flores amarillas iluminen tu día tanto como tú iluminas mi vida. ❤️
+    </p>
+  </div>
+
+  <script>
+    // Crear flores amarillas animadas
+    const flowerTypes = ['🌻', '🌼', '💛', '✨'];
+
+    function createFlower() {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.innerText = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+      
+      flower.style.left = Math.random() * 100 + 'vw';
+      flower.style.animationDuration = Math.random() * 3 + 2 + 's'; // Entre 2 y 5 segundos
+      flower.style.fontSize = Math.random() * 20 + 20 + 'px'; // Tamaño entre 20px y 40px
+      flower.style.opacity = Math.random() * 0.7 + 0.3;
+
+      document.body.appendChild(flower);
+
+      setTimeout(() => {
+        flower.remove();
+      }, 5000);
+    }
+
+    // Iniciar la lluvia de flores de fondo
+    setInterval(createFlower, 300);
+
+    // Abrir el regalo al hacer clic
+    function openGift() {
+      document.getElementById('gift').style.display = 'none';
+      document.getElementById('mainTitle').style.display = 'none';
+      document.getElementById('card').style.display = 'block';
+
+      // Intensificar las flores al abrir
+      for (let i = 0; i < 30; i++) {
+        setTimeout(createFlower, i * 50);
+      }
+    }
+  </script>
+</body>
+</html>
