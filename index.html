@@ -1,260 +1,176 @@
+6/11/26   20:12
+
+index.html
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Una carta especial para ti 🌻💛</title>
+  <title>Un detalle especial para ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    body {
-      background: linear-gradient(135deg, #fff3cd, #ffe89a);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
-      overflow-y: auto;
-      padding: 20px;
-      position: relative;
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at center, #1f0308 0%, #0a0103 100%);
+      color: #fff;
     }
 
-    /* Sobre interactivo */
-    .envelope-wrapper {
-      cursor: pointer;
-      z-index: 10;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .envelope-wrapper:hover {
-      transform: scale(1.05);
-    }
-
-    .envelope {
-      width: 220px;
-      height: 150px;
-      background-color: #f39c12;
-      border-radius: 8px;
-      position: relative;
-      margin: 0 auto 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Solapa del sobre */
-    .envelope::before {
-      content: '';
+    /* Canvas para la lluvia de pétalos */
+    #petals-canvas {
       position: absolute;
       top: 0;
       left: 0;
-      width: 0;
-      height: 0;
-      border-left: 110px solid transparent;
-      border-right: 110px solid transparent;
-      border-top: 80px solid #d68910;
-      transform-origin: top;
-      transition: transform 0.5s ease;
-    }
-
-    .heart-seal {
-      font-size: 2.2rem;
-      z-index: 2;
-    }
-
-    .instruction {
-      font-size: 1.2rem;
-      color: #7d6608;
-      font-weight: 600;
-    }
-
-    /* Contenedor principal de la Carta y el Ramo */
-    .letter-container {
-      display: none;
-      background-color: #ffffff;
-      padding: 30px 25px;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      text-align: center;
-      max-width: 480px;
       width: 100%;
-      z-index: 20;
-      animation: openCard 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
     }
 
-    @keyframes openCard {
-      0% { transform: scale(0.3); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    /* Contenedor principal */
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
 
-    .letter-container h1 {
-      color: #b7950b;
+    /* Pantalla inicial con la rosa */
+    .intro-screen {
+      text-align: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      cursor: pointer;
+    }
+
+    .intro-screen.hidden {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      position: absolute;
+    }
+
+    .rose-container {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 25px auto;
+      filter: drop-shadow(0 0 25px rgba(230, 29, 63, 0.6));
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .rose-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .click-hint {
+      font-family: 'Caveat', cursive;
       font-size: 1.8rem;
-      margin-bottom: 15px;
+      color: #ff9ebb;
+      margin-top: 15px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(255, 158, 187, 0.4);
+      animation: pulse 2s infinite;
     }
 
-    .letter-container p {
-      color: #4a4a4a;
-      font-size: 1.1rem;
-      line-height: 1.6;
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Tarjeta del mensaje */
+    .card {
+      background: rgba(25, 4, 10, 0.75);
+      border: 1px solid rgba(230, 29, 63, 0.3);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(230, 29, 63, 0.25);
+      opacity: 0;
+      transform: scale(0.85) translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+
+    .card-header {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: #ff4d6d;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px rgba(255, 77, 109, 0.4);
+    }
+
+    .card-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #fce4ec;
+      text-align: justify;
+      font-weight: 300;
       margin-bottom: 25px;
     }
 
-    /* Ilustración del Ramo de Girasoles con Flores */
-    .bouquet-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      position: relative;
-      height: 180px;
-      margin-top: 10px;
+    .card-body p {
+      margin-bottom: 15px;
     }
 
-    .bouquet {
-      position: relative;
-      width: 160px;
-      height: 160px;
+    .card-footer {
+      font-family: 'Caveat', cursive;
+      font-size: 1.7rem;
+      color: #ff9ebb;
+      text-align: right;
+      margin-top: 20px;
     }
 
-    /* Tallo y Envoltorio del ramo */
-    .wrapper-paper {
+    /* Decoraciones de la tarjeta */
+    .corner-rose {
       position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 100px;
-      background: #e5c07b;
-      clip-path: polygon(10% 0%, 90% 0%, 70% 100%, 30% 100%);
-      border-radius: 4px;
-      box-shadow: inset 0 -10px 15px rgba(0,0,0,0.1);
+      width: 40px;
+      height: 40px;
+      opacity: 0.6;
     }
-
-    .ribbon {
-      position: absolute;
-      bottom: 45px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 15px;
-      background-color: #e74c3c;
-      border-radius: 10px;
-      z-index: 5;
-    }
-
-    /* Flores individuales dentro del ramo */
-    .flower-item {
-      position: absolute;
-      animation: floatFlower 3s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatFlower {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
-
-    .sunflower1 { font-size: 3.5rem; top: -10px; left: 10px; z-index: 3; }
-    .sunflower2 { font-size: 4rem; top: -30px; left: 50px; z-index: 4; }
-    .sunflower3 { font-size: 3.5rem; top: -10px; left: 90px; z-index: 3; }
-    .small-flower1 { font-size: 2.2rem; top: 30px; left: 5px; z-index: 4; }
-    .small-flower2 { font-size: 2.2rem; top: 30px; left: 115px; z-index: 4; }
-    .leaf1 { font-size: 2.5rem; top: 10px; left: -15px; transform: rotate(-30deg); }
-    .leaf2 { font-size: 2.5rem; top: 10px; left: 125px; transform: rotate(30deg); }
-
-    /* Lluvia de Flores en pantalla */
-    .falling-flower {
-      position: fixed;
-      top: -50px;
-      user-select: none;
-      pointer-events: none;
-      z-index: 5;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(105vh) rotate(360deg);
-      }
-    }
+    .top-left { top: 15px; left: 15px; }
+    .bottom-right { bottom: 15px; right: 15px; transform: rotate(180deg); }
   </style>
 </head>
 <body>
 
-  <!-- Vista Inicial: Sobre de la carta -->
-  <div class="envelope-wrapper" id="envelopeWrapper" onclick="openLetter()">
-    <div class="envelope">
-      <div class="heart-seal">💌</div>
-    </div>
-    <div class="instruction">Haz clic para abrir tu carta 💛</div>
-  </div>
+  <canvas id="petals-canvas"></canvas>
 
-  <!-- Vista Secundaria: Carta con el ramo -->
-  <div class="letter-container" id="letterContainer">
-    <h1>🌻 Para ti Oriana, con todo mi amor 💛</h1>
-    <p>
-      Quería darte este detalle especial para sacarte una sonrisa. 
-      Así como los girasoles siempre buscan la luz del sol, yo siempre amo ver la luz de tus ojos cuando sonries. 
-      ¡Espero que te encante tu ramo de flores amarillas!
-    </p>
-
-    <!-- Ramo de girasoles decorativo -->
-    <div class="bouquet-wrapper">
-      <div class="bouquet">
-        <span class="flower-item leaf1">🌿</span>
-        <span class="flower-item leaf2">🌿</span>
-        <span class="flower-item sunflower1">🌻</span>
-        <span class="flower-item sunflower2">🌻</span>
-        <span class="flower-item sunflower3">🌻</span>
-        <span class="flower-item small-flower1">🌼</span>
-        <span class="flower-item small-flower2">🌼</span>
-        <div class="ribbon"></div>
-        <div class="wrapper-paper"></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const flowerTypes = ['🌻', '🌼', '💛', '✨', '🌸'];
-    let rainInterval;
-
-    function createFallingFlower() {
-      const flower = document.createElement('div');
-      flower.classList.add('falling-flower');
-      flower.innerText = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
-      
-      flower.style.left = Math.random() * 100 + 'vw';
-      flower.style.animationDuration = Math.random() * 3 + 2.5 + 's';
-      flower.style.fontSize = Math.random() * 20 + 20 + 'px';
-      flower.style.opacity = Math.random() * 0.8 + 0.2;
-
-      document.body.appendChild(flower);
-
-      setTimeout(() => {
-        flower.remove();
-      }, 5500);
-    }
-
-    function openLetter() {
-      // Ocultar sobre y mostrar carta
-      document.getElementById('envelopeWrapper').style.display = 'none';
-      document.getElementById('letterContainer').style.display = 'block';
-
-      // Iniciar lluvia continua de flores amarillas
-      rainInterval = setInterval(createFallingFlower, 200);
-
-      // Ráfaga inicial de flores
-      for (let i = 0; i < 25; i++) {
-        setTimeout(createFallingFlower, i * 40);
-      }
-    }
-  </script>
-</body>
-</html>
+  <div class="container">
+    <!-- Pantalla de inicio -->
+    <div class="intro-screen" id="intro">
+      <div class="rose-container">
+        <svg class="rose-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 10C24 4 14 10 16 22C18 34 32 44 32 44C32 44 46 34 48 22C50 10 40 4 32 10Z" fill="#e61d3f"/>
+          <path d="M32 14C28 9 20 12 21 20C22 28 32 36 32 36C32 36 42 28 43 20C44 12 36 9 32 14Z" fill="#ff4
